@@ -44,10 +44,11 @@ if __name__ == '__main__':
     arg_group.add_argument('-i', '--invalid', action='store_true', help='display only invalid lines', default=False)
     arg_group.add_argument('-a', '--any', action='store_true', help='display only lines with ' +'an \'any\'',
                            default=False)
-    arg_group.add_argument('-q', '--quiet', action='store_true', help='suppress invalid and sanity check output',
-                           default=False)
-    parser.add_argument('--disable-flag', type=str, default='', help='stop searching until the reenable flag is hit')
-    parser.add_argument('--reenable-flag', type=str, default='', help='reenable searching when this flag is seen')
+    arg_group.add_argument('-q', '--quiet', action='store_true', help='suppress invalid lines output', default=False)
+    parser.add_argument('--disable-flag', metavar='FLAG', type=str, default='',
+                        help='stop searching until the reenable flag is hit')
+    parser.add_argument('--reenable-flag', metavar='FLAG', type=str, default='',
+                        help='reenable searching when this flag is seen')
     args = parser.parse_args()
 
     VERBOSE = args.verbose
