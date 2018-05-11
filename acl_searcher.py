@@ -57,9 +57,14 @@ if __name__ == '__main__':
     ONLY_INVALID = args.invalid
     ONLY_ANY = args.any
     QUIET = args.quiet
-    DISABLE_SEARCH = args.disable_flag
-    START_SEARCH = args.reenable_flag
 
+    DISABLE_SEARCH, START_SEARCH = False, False
+    if args.disable_flag:
+        DISABLE_SEARCH = True
+        DISABLE_SEARCH_FLAG = args.disable_flag
+    if args.reenable_flag:
+        START_SEARCH = True
+        START_SEARCH_FLAG = args.reenable_flag
 
     ANY = IPSet(IPNetwork('0.0.0.0/0'))
     invalid_acls, sanity_check = [], []
@@ -89,13 +94,13 @@ if __name__ == '__main__':
         # Evaluate whether we're within a section we should ignore
         if not searching:
             # If we've currently stopped searching but see the flag to resume, re-enable searching
-            if START_SEARCH in line:
+            if START_SEARCH and START_SEARCH in line:
                 searching = True
             # If we've stopped searching and didn't hit a flag to resume, continue
             else:
                 continue
         # If we're currently searching and we see the flag to stop searching, stop searching and move on
-        elif searching and DISABLE_SEARCH in line:
+        elif searching and DISABLE_SEARCH and DISABLE_SEARCH_FLAG in line:
             searching = False
             continue
 
